@@ -1,8 +1,10 @@
 package com.example.transitoapp
 
+import android.app.Activity
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -27,7 +29,7 @@ class CameraActivity : ComponentActivity() {
             MaterialTheme {
                 CameraScreen { uri ->
                     // Devolver URI al MainActivity
-                    setResult(RESULT_OK, intent.apply { putExtra("fotoUri", uri.toString()) })
+                    setResult(Activity.RESULT_OK, intent.apply { putExtra("fotoUri", uri.toString()) })
                     finish()
                 }
             }
@@ -44,7 +46,7 @@ fun CameraScreen(onPhotoTaken: (Uri) -> Unit) {
 
     val takePictureLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.TakePicture()
-    ) { success ->
+    ) { success: Boolean ->
         if (success) {
             imageUri?.let { uri ->
                 capturedBitmap = context.contentResolver.openInputStream(uri)?.use { stream ->
@@ -131,8 +133,9 @@ fun CameraScreen(onPhotoTaken: (Uri) -> Unit) {
 
             Button(
                 onClick = {
-                    imageUri = createImageFile()
-                    takePictureLauncher.launch(imageUri)
+                    val uri = createImageFile()
+                    imageUri = uri
+                    takePictureLauncher.launch(uri)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

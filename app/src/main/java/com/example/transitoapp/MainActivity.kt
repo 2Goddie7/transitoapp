@@ -1,6 +1,7 @@
 package com.example.transitoapp
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.os.VibrationEffect
@@ -38,7 +39,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AccidentFormScreen() {
     val context = LocalContext.current
@@ -69,7 +70,7 @@ fun AccidentFormScreen() {
     val cameraLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        if (result.resultCode == ComponentActivity.RESULT_OK) {
+        if (result.resultCode == Activity.RESULT_OK) {
             result.data?.getStringExtra("fotoUri")?.let { uriString ->
                 fotoUri = File(android.net.Uri.parse(uriString).path ?: "")
                 fotoBitmap = android.graphics.BitmapFactory.decodeFile(fotoUri?.absolutePath)

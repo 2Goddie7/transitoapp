@@ -57,8 +57,12 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    implementation("androidx.activity:activity-compose:1.8.0")
-    implementation("androidx.compose.material3:material3:1.1.0")
-    implementation("com.google.accompanist:accompanist-permissions:0.31.4-alpha")
-    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation("androidx.compose.material3:material3:1.2.1")
+
+    // CORREGIDO: Versión correcta de accompanist-permissions
+    implementation("com.google.accompanist:accompanist-permissions:0.34.0")
+
+    // Google Play Services - Location
+    implementation("com.google.android.gms:play-services-location:21.2.0")
 }
